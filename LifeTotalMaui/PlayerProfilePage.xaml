@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LifeTotalMaui.PlayerProfilePage"
+             Title="Player Profile">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20">
+            <Label Text="{Binding Name}"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="{Binding Elo}"
+                   FontSize="18"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="{Binding Gamematches}"
+                   FontSize="16"
+                   HorizontalOptions="Center"/>
+
+            <Button Text="Delete Player"
+                    TextColor="White"
+                    BackgroundColor="Red"
+                    Clicked="OnDeleteClicked"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

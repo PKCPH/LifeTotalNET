@@ -8,7 +8,6 @@ public class Player
     public string Id { get; set; }
 
     public string Name { get; set; }
-    public int LifeTotal { get; set; }
     public int Elo { get; set; }
 
     public ICollection<GamematchPlayer>? Gamematches { get; set; }

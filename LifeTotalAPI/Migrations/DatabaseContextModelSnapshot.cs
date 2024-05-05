@@ -53,6 +53,9 @@ namespace LifeTotalAPI.Migrations
                     b.Property<Guid>("GameMatchId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("LifeTotal")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("PlayerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -72,9 +75,6 @@ namespace LifeTotalAPI.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Elo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LifeTotal")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")

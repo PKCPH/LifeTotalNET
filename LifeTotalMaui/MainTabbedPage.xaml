@@ -4,9 +4,4 @@
             xmlns:local="clr-namespace:LifeTotalMaui"
             x:Class="LifeTotalMaui.MainTabbedPage">
 
-    <!-- Tabs will be added here -->
-    <TabbedPage.Children>
-        <local:FirstPage Title="First" IconImageSource="icon_first.png"/>
-        <local:SecondPage Title="Second" IconImageSource="icon_second.png"/>
-    </TabbedPage.Children>
 </TabbedPage>

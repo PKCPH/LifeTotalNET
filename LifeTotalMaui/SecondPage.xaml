@@ -2,11 +2,48 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LifeTotalMaui.SecondPage"
-             Title="SecondPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             Title="Player Management">
+
+    <VerticalStackLayout Padding="30" Spacing="20">
+
+        <!-- Create Player Section -->
+        <Entry x:Name="playerNameEntry"
+               Placeholder="Enter player's name"
+               VerticalOptions="Start"
+               HorizontalOptions="FillAndExpand" />
+
+        <Button Text="Create Player"
+                Clicked="OnCreatePlayerClicked"
+                VerticalOptions="Start"
+                HorizontalOptions="FillAndExpand" />
+
+        <!-- Search Players Section -->
+        <SearchBar x:Name="searchBar"
+                   Placeholder="Search players by name"
+                   TextChanged="SearchBar_TextChanged"
+                   VerticalOptions="Start"
+                   HorizontalOptions="FillAndExpand" />
+
+        <ListView x:Name="playersListView"
+          ItemsSource="{Binding Players}"
+          SelectionMode="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}"
+                      Detail="{Binding Elo}"
+                      Command="{Binding Source={x:Reference Name=Page}, Path=BindingContext.PlayerSelectedCommand}"
+                      CommandParameter="{Binding .}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Player Details Display -->
+        <StackLayout x:Name="playerDetails" IsVisible="False">
+            <Label Text="Player Details" FontAttributes="Bold" FontSize="Large"/>
+            <Label x:Name="playerName" Text="{Binding SelectedPlayer.Name}"/>
+            <Label x:Name="playerElo" Text="{Binding SelectedPlayer.Elo}"/>
+            <Label x:Name="playerMatches" Text="{Binding SelectedPlayer.Gamematches}"/>
+        </StackLayout>
+
     </VerticalStackLayout>
 </ContentPage>

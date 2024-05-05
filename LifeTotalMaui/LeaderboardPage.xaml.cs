@@ -12,7 +12,12 @@ public partial class LeaderboardPage : ContentPage
 	{
 		InitializeComponent();
         Title = "Leaderboard";
-        LoadTopPlayersAsync();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        LoadTopPlayersAsync();  // Reload data every time the page appears
     }
 
     private async void LoadTopPlayersAsync()

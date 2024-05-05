@@ -37,7 +37,7 @@ public class PlayerRepository
         if (existingPlayer != null)
         {
             existingPlayer.Name = player.Name;
-            existingPlayer.LifeTotal = player.LifeTotal;
+            existingPlayer.Elo = player.Elo;
 
             await _context.SaveChangesAsync();
         }

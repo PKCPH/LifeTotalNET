@@ -86,6 +86,9 @@
 	  <MauiXaml Update="MainTabbedPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="PlayerProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Players.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

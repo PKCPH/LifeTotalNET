@@ -35,13 +35,15 @@ public class GamematchService
         {
             Id = Guid.NewGuid(),
             GameMatchId = gamematch.Id,
-            PlayerId = player1
+            PlayerId = player1,
+            LifeTotal = 20
         };
         GamematchPlayer gamematchPlayer2 = new()
         {
             Id = Guid.NewGuid(),
             GameMatchId = gamematch.Id,
-            PlayerId = player2
+            PlayerId = player2,
+            LifeTotal = 20
         };
         gamematch.Players.Add(gamematchPlayer1);
         gamematch.Players.Add(gamematchPlayer2);

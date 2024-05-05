@@ -11,4 +11,5 @@ public class GamematchPlayer
     public Guid GameMatchId { get; set; }
 
     public Guid PlayerId { get; set; }
+    public int? LifeTotal { get; set; }
 }

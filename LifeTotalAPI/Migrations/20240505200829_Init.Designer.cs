@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LifeTotalAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240505112223_init")]
-    partial class init
+    [Migration("20240505200829_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,6 +56,9 @@ namespace LifeTotalAPI.Migrations
                     b.Property<Guid>("GameMatchId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("LifeTotal")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("PlayerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -74,7 +77,7 @@ namespace LifeTotalAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("LifeTotal")
+                    b.Property<int>("Elo")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -120,21 +123,17 @@ namespace LifeTotalAPI.Migrations
 
             modelBuilder.Entity("LifeTotalAPI.Models.GamematchPlayer", b =>
                 {
-                    b.HasOne("LifeTotalAPI.Models.Gamematch", "GameMatch")
+                    b.HasOne("LifeTotalAPI.Models.Gamematch", null)
                         .WithMany("Players")
                         .HasForeignKey("GameMatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LifeTotalAPI.Models.Player", "Player")
+                    b.HasOne("LifeTotalAPI.Models.Player", null)
                         .WithMany("Gamematches")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("GameMatch");
-
-                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("LifeTotalAPI.Models.Gamematch", b =>
