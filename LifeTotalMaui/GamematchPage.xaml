@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LifeTotalMaui.GamematchPage"
+             Title="GamematchPage">
+    <ScrollView>
+        <CollectionView x:Name="matchesCollectionView" ItemsSource="{Binding Gamematches}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Label Text="{Binding DateTime, StringFormat='{0:G}'}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                        <Label Text="{Binding MatchState}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                        <Label Text="{Binding Winner.Name}" VerticalOptions="Center" HorizontalOptions="End" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ScrollView>
+</ContentPage>

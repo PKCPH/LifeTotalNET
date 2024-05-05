@@ -64,11 +64,36 @@ public partial class SecondPage : ContentPage
 
     private async void OnCreatePlayerClicked(object sender, EventArgs e)
     {
-        // Simulate creating a player
-        // You would replace this with logic to actually create the player in your backend
-        Players.Add(new Player { Name = playerNameEntry.Text, Elo = 1000 }); // Example data
-        playerNameEntry.Text = string.Empty;
-        await DisplayAlert("Success", "Player created successfully", "OK");
+        if (string.IsNullOrWhiteSpace(playerNameEntry.Text))
+        {
+            await DisplayAlert("Input Error", "Player name cannot be empty.", "OK");
+            return;
+        }
+
+        var player = new Player { Name = playerNameEntry.Text };
+
+        var json = JsonConvert.SerializeObject(player);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var contentString = await content.ReadAsStringAsync();  // This line allows you to see the actual JSON string
+        Console.WriteLine(contentString);  // Log the JSON string to the output for verification
+
+        try
+        {
+            var response = await _client.PostAsync("http://127.0.0.1:5256/Player", content);
+            if (response.IsSuccessStatusCode)
+            {
+                playerNameEntry.Text = string.Empty; // Clear the text field on success
+                await DisplayAlert("Success", "Player created successfully", "OK");
+            }
+            else
+            {
+                await DisplayAlert("Error", $"Failed to create player: {response.StatusCode}", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+        }
     }
 
     private void OnPlayerSelected(Player player)

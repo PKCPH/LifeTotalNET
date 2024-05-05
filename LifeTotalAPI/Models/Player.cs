@@ -11,7 +11,7 @@ public class Player
 
     public string Name { get; set; }
 
-    public int Elo { get; set; }
+    public int? Elo { get; set; }
 
     public ICollection<GamematchPlayer>? Gamematches { get; set; }
 }

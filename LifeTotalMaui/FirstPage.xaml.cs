@@ -15,9 +15,13 @@ public partial class FirstPage : ContentPage
     {
         InitializeComponent();
         BindingContext = this;
-        LoadPlayersAsync();
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        LoadPlayersAsync();  // Reload data every time the page appears
+    }
 
     private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
