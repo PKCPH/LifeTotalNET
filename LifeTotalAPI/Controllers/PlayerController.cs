@@ -22,6 +22,17 @@ public class PlayerController : ControllerBase
         return Ok(players);
     }
 
+    [HttpGet("Top20")]
+    public async Task<ActionResult<IEnumerable<Player>>> GetTopPlayers()
+    {
+        var players = await _playerService.GetAllPlayers();
+        var topPlayers = players.OrderByDescending(x => x.Elo)
+                                .Take(20)                 
+                                .ToList();                 
+
+        return Ok(topPlayers);
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<Player>> GetPlayerById(Guid id)
     {

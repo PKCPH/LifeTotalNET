@@ -1,0 +1,12 @@
+<!-- MainTabbedPage.xaml -->
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:LifeTotalMaui"
+            x:Class="LifeTotalMaui.MainTabbedPage">
+
+    <!-- Tabs will be added here -->
+    <TabbedPage.Children>
+        <local:FirstPage Title="First" IconImageSource="icon_first.png"/>
+        <local:SecondPage Title="Second" IconImageSource="icon_second.png"/>
+    </TabbedPage.Children>
+</TabbedPage>

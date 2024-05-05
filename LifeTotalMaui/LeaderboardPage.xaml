@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LifeTotalMaui.LeaderboardPage"
+             Title="Leaderboard">
+    <VerticalStackLayout Padding="20">
+        <Label Text="Top Players"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"/>
+
+        <ListView x:Name="leaderboardListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}" Detail="{Binding Elo}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </VerticalStackLayout>
+</ContentPage>
