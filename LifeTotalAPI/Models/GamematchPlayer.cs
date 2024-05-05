@@ -3,14 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LifeTotalAPI.Models;
 
-public class Player
+public class GamematchPlayer
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
+    public Guid GameMatchId { get; set; }
 
-    public string Name { get; set; }
-    public int LifeTotal { get; set; }
-
-    public ICollection<GamematchPlayer>? Gamematches { get; set; }
+    public Guid PlayerId { get; set; }
 }
