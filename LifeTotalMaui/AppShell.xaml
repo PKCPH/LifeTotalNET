@@ -7,8 +7,9 @@
     Shell.FlyoutBehavior="Disabled"
     Title="LifeTotalMaui">
 
+    <!-- Define your shell content -->
     <ShellContent
-        Title="Home"
+        Title="Home2"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 

@@ -1,6 +1,6 @@
 @LifeTotalAPI_HostAddress = http://localhost:5256
 
-GET {{LifeTotalAPI_HostAddress}}/weatherforecast/
+GET {{LifeTotalAPI_HostAddress}}/Player/
 Accept: application/json
 
 ###
