@@ -17,10 +17,11 @@ public partial class FirstPage : ContentPage
         BindingContext = this;
     }
 
+    //reload playlist
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        LoadPlayersAsync();  // Reload data every time the page appears
+        LoadPlayersAsync();  
     }
 
     private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -28,9 +29,7 @@ public partial class FirstPage : ContentPage
         var currentSelection = e.CurrentSelection;
         if (currentSelection != null)
         {
-            // Assuming Player class has an Id property
             var selectedPlayerIds = currentSelection.OfType<Player>().Select(p => p.Id).ToList();
-            // You can now use selectedPlayerIds to create matches or other operations
         }
     }
 
@@ -46,19 +45,18 @@ public partial class FirstPage : ContentPage
                 var players = JsonConvert.DeserializeObject<List<Player>>(jsonResponse);
                 if (players != null)
                 {
+                    Players.Clear();
                     foreach (var player in players) { Players.Add(player); }
                 }
             }
             else
             {
                 Console.WriteLine($"Failed to fetch data: {response.StatusCode}");
-                // Handle other status codes and error scenarios
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Exception occurred: {ex.Message}");
-            // Handle exceptions or display an error message
         }
     }
 
@@ -76,12 +74,8 @@ public partial class FirstPage : ContentPage
                 DisplayAlert("Selection Limit", "You can only select two players for a match.", "OK");
             }
 
-            // Update the button's enabled state based on the selection count
-            //(Button)this.FindByName("createMatchButton")).IsEnabled = selectedPlayerIds.Count == 2;
         }
-
-            // Deselect item visually in UI
-            ((ListView)sender).SelectedItem = null;
+        ((ListView)sender).SelectedItem = null;
     }
 
     private async void OnCreateMatchClicked(object sender, EventArgs e)
@@ -94,7 +88,7 @@ public partial class FirstPage : ContentPage
 
             try
             {
-                var response = await _client.PostAsync(builder.Uri, null);  // Passing 'null' as the content since the data is in the query string
+                var response = await _client.PostAsync(builder.Uri, null);  
                 if (response.IsSuccessStatusCode)
                 {
                     await DisplayAlert("Match Created", "The match has been successfully created.", "OK");

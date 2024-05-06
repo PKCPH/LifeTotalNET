@@ -16,7 +16,10 @@ public class GamematchRepository
 
     public async Task<IEnumerable<Gamematch>> GetAllGamematches()
     {
-        return await _context.Gamematches.ToListAsync();
+        return await _context.Gamematches
+                            .Include(gm => gm.Players)
+                            .ThenInclude(gp => gp.Player)
+                            .ToListAsync();
     }
 
     public async Task<Gamematch> GetGamematchById(Guid id)

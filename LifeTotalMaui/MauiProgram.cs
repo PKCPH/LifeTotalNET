@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using LifeTotalMaui.Services;
+using LifeTotalMaui.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace LifeTotalMaui;
 public static class MauiProgram
@@ -14,8 +16,12 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+        //builder.Services.AddSingleton<HttpClient>();
+        //builder.Services.AddSingleton<IDataService, DataService>();
+
+        //builder.Services.AddTransient<LeaderboardViewModel>();
 #if DEBUG
-		builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
         return builder.Build();

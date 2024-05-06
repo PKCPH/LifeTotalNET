@@ -19,6 +19,9 @@
                        VerticalOptions="Center"
                        HorizontalOptions="End"
                        IsVisible="False"/>
+                        <Label Text="{Binding Elo}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"/>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

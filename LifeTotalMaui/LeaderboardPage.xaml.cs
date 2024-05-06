@@ -1,4 +1,5 @@
 using LifeTotalMaui.Models;
+using LifeTotalMaui.ViewModels;
 using Microsoft.Maui.Controls;
 using Newtonsoft.Json;
 
@@ -12,12 +13,13 @@ public partial class LeaderboardPage : ContentPage
 	{
 		InitializeComponent();
         Title = "Leaderboard";
+        BindingContext = this;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        LoadTopPlayersAsync();  // Reload data every time the page appears
+        LoadTopPlayersAsync(); 
     }
 
     private async void LoadTopPlayersAsync()

@@ -8,9 +8,10 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="10" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Label Text="{Binding PlayerNames}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
                         <Label Text="{Binding DateTime, StringFormat='{0:G}'}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
                         <Label Text="{Binding MatchState}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
-                        <Label Text="{Binding Winner.Name}" VerticalOptions="Center" HorizontalOptions="End" />
+                        <Label Text="{Binding Winner.Name, StringFormat='Winner: {0}'}" VerticalOptions="Center" HorizontalOptions="End" />
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

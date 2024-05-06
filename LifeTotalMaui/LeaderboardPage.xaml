@@ -8,12 +8,24 @@
                FontAttributes="Bold"
                HorizontalOptions="Center"/>
 
-        <ListView x:Name="leaderboardListView">
+        <ListView x:Name="leaderboardListView" ItemsSource="{Binding Players}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Name}" Detail="{Binding Elo}" />
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Padding="10">
+                            <Label Text="{Binding Name}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding Elo}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="End"
+                                   FontAttributes="Bold" />
+                        </StackLayout>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
     </VerticalStackLayout>
 </ContentPage>
+

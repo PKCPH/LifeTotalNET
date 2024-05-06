@@ -6,6 +6,19 @@ namespace LifeTotalMaui.Models;
 
 public class Player
 {
+
+    public string? Id { get; set; }
+
+    public string Name { get; set; }
+    [JsonIgnore]
+    public int? Elo { get; set; }
+
+    [JsonIgnore]
+    public ICollection<GamematchPlayer>? Gamematches { get; set; }
+}
+
+public class PlayerCreate
+{
     [JsonIgnore]
     public string? Id { get; set; }
 
@@ -16,3 +29,4 @@ public class Player
     [JsonIgnore]
     public ICollection<GamematchPlayer>? Gamematches { get; set; }
 }
+

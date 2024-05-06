@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 public class PlayerService
 {
     private readonly PlayerRepository _playerRepository;
+    private readonly GamematchRepository _gamematchRepository;
 
-    public PlayerService(PlayerRepository playerRepository)
+    public PlayerService(PlayerRepository playerRepository, GamematchRepository gamematchRepository)
     {
         _playerRepository = playerRepository;
+        _gamematchRepository = gamematchRepository;
     }
 
     public async Task<IEnumerable<Player>> GetAllPlayers()
@@ -38,6 +40,16 @@ public class PlayerService
 
     public async Task<bool> DeletePlayer(Guid id)
     {
+        var gamematches = _gamematchRepository.GetAllGamematches().Result.ToList();
+        var matchesWithPlayer = gamematches
+        .Where(match => match.Players.Any(p => p.Player.Id == id))
+        .ToList();
+
+        foreach (var match in matchesWithPlayer)
+        {
+            match.MatchState = MatchState.Cancelled; 
+            await _gamematchRepository.UpdateGamematch(match.Id, match);
+        }
         return await _playerRepository.DeletePlayer(id);
     }
 }

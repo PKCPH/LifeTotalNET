@@ -6,41 +6,67 @@ namespace LifeTotalMaui;
 
 public partial class GamematchPage : ContentPage
 {
-    public ObservableCollection<Gamematch> GameMatches { get; set; } = new ObservableCollection<Gamematch>();
+    private HttpClient _client = new HttpClient();
+    public ObservableCollection<GetAllGamematch> Gamematches { get; set; } = new ObservableCollection<GetAllGamematch>();
 
     public GamematchPage()
     {
         InitializeComponent();
         BindingContext = this;
-        LoadGameMatchesAsync();
     }
 
-    private async void LoadGameMatchesAsync()
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        LoadMatchesAsync();
+    }
+
+    private async void LoadMatchesAsync()
     {
         try
         {
-            using (HttpClient client = new HttpClient())
+            var response = await _client.GetAsync("http://127.0.0.1:5256/Gamematch");
+            if (response.IsSuccessStatusCode)
             {
-                string url = "http://localhost:5256/Gamematch";
-                var jsonResponse = await client.GetStringAsync(url);  // Fetch the JSON string from the API
-                if (!string.IsNullOrEmpty(jsonResponse))
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                var matches = JsonConvert.DeserializeObject<List<GetAllGamematch>>(jsonResponse);
+                Gamematches.Clear();
+                foreach (var match in matches)
                 {
-                    var matches = JsonConvert.DeserializeObject<List<Gamematch>>(jsonResponse);  // Deserialize the JSON string into a List of Gamematch
-                    if (matches != null)
-                    {
-                        var sortedMatches = matches.OrderBy(m => m.DateTime).ToList();
-                        foreach (var match in sortedMatches)
-                        {
-                            GameMatches.Add(match);  // Add to the observable collection
-                        }
-                    }
+                    Gamematches.Add(match);
                 }
+            }
+            else
+            {
+                Console.WriteLine("Failed to load matches");
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Failed to load game matches: {ex.Message}");
-            // Optionally add UI feedback here to inform the user of the failure
+            Console.WriteLine($"Exception in loading matches: {ex.Message}");
+        }
+    }
+
+    private void OnExpandClicked(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        var match = button?.BindingContext as GetAllGamematch;
+
+        if (match != null)
+        {
+            // Collapse all matches
+            foreach (var gm in Gamematches)
+            {
+                if (gm != match)
+                    gm.IsExpanded = false;
+            }
+
+            // Toggle the selected match
+            match.ToggleExpansion();
+
+            // Force the CollectionView to refresh
+            matchesCollectionView.ItemsSource = null;
+            matchesCollectionView.ItemsSource = Gamematches;
         }
     }
 }

@@ -6,10 +6,12 @@ namespace LifeTotalAPI.Services;
 public class GamematchService
 {
     private readonly GamematchRepository _gamematchRepository;
+    private readonly PlayerRepository _playerRepository;
 
-    public GamematchService(GamematchRepository gamematchRepository)
+    public GamematchService(GamematchRepository gamematchRepository, PlayerRepository playerRepository)
     {
         _gamematchRepository = gamematchRepository;
+        _playerRepository = playerRepository;
     }
 
     public async Task<IEnumerable<Gamematch>> GetAllGamematches()
@@ -24,6 +26,8 @@ public class GamematchService
 
     public async Task<Gamematch> AddGamematch(Guid player1, Guid player2)
     {
+        var player1Name = await _playerRepository.GetPlayerById(player1);
+        var player2Name = await _playerRepository.GetPlayerById(player2);
         Gamematch gamematch = new()
         {
             Id = Guid.NewGuid(),
@@ -36,6 +40,7 @@ public class GamematchService
             Id = Guid.NewGuid(),
             GameMatchId = gamematch.Id,
             PlayerId = player1,
+            PlayerName = player1Name.Name,
             LifeTotal = 20
         };
         GamematchPlayer gamematchPlayer2 = new()
@@ -43,6 +48,7 @@ public class GamematchService
             Id = Guid.NewGuid(),
             GameMatchId = gamematch.Id,
             PlayerId = player2,
+            PlayerName = player2Name.Name,
             LifeTotal = 20
         };
         gamematch.Players.Add(gamematchPlayer1);

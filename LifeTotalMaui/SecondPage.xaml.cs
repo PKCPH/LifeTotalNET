@@ -11,13 +11,25 @@ public partial class SecondPage : ContentPage
     private HttpClient _client = new HttpClient();
     public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
     public ICommand PlayerSelectedCommand { get; private set; }
+    private List<Player> _selectedPlayers = new List<Player>();
+
 
     public SecondPage()
     {
         InitializeComponent();
-        PlayerSelectedCommand = new Command<Player>(OnPlayerSelected);
         BindingContext = this;
-        LoadPlayersAsync();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        LoadPlayersAsync();  // Reload data every time the page appears
+    }
+
+
+    private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        _selectedPlayers = e.CurrentSelection.Cast<Player>().ToList();
     }
 
     private async void LoadPlayersAsync()
@@ -32,6 +44,7 @@ public partial class SecondPage : ContentPage
                 var players = JsonConvert.DeserializeObject<List<Player>>(jsonResponse);
                 if (players != null)
                 {
+                    Players.Clear();
                     foreach (var player in players) { Players.Add(player); }
                 }
             }
@@ -48,20 +61,6 @@ public partial class SecondPage : ContentPage
         }
     }
 
-    private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        var searchText = e.NewTextValue?.ToLower() ?? string.Empty;
-        if (!string.IsNullOrWhiteSpace(searchText))
-        {
-            var filteredPlayers = Players.Where(p => p.Name.ToLower().Contains(searchText)).ToList();
-            playersListView.ItemsSource = filteredPlayers;
-        }
-        else
-        {
-            playersListView.ItemsSource = Players;
-        }
-    }
-
     private async void OnCreatePlayerClicked(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(playerNameEntry.Text))
@@ -70,7 +69,7 @@ public partial class SecondPage : ContentPage
             return;
         }
 
-        var player = new Player { Name = playerNameEntry.Text };
+        var player = new PlayerCreate { Name = playerNameEntry.Text };
 
         var json = JsonConvert.SerializeObject(player);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -83,6 +82,7 @@ public partial class SecondPage : ContentPage
             if (response.IsSuccessStatusCode)
             {
                 playerNameEntry.Text = string.Empty; // Clear the text field on success
+                LoadPlayersAsync();
                 await DisplayAlert("Success", "Player created successfully", "OK");
             }
             else
@@ -96,14 +96,36 @@ public partial class SecondPage : ContentPage
         }
     }
 
-    private void OnPlayerSelected(Player player)
+    private async void OnDeletePlayerClicked(object sender, EventArgs e)
     {
-        if (player != null)
+        if (_selectedPlayers.Count == 0)
         {
-            playerName.Text = player.Name;
-            playerElo.Text = $"Elo: {player.Elo}";
-            playerMatches.Text = $"Matches: {player.Gamematches}";
-            playerDetails.IsVisible = true;  // Ensure the details section is visible
+            await DisplayAlert("Delete Player", "No player selected.", "OK");
+            return;
+        }
+
+        bool confirm = await DisplayAlert("Delete Player", "Are you sure you want to delete the selected players?", "Yes", "No");
+        if (confirm)
+        {
+            foreach (var player in _selectedPlayers)
+            {
+                Players.Remove(player); // Assuming Players is an ObservableCollection<Player>
+                                        // You should also call your API or service here to delete the player from the backend
+                await DeletePlayerAsync(player);
+            }
+            _selectedPlayers.Clear(); // Clear the selected players list after deletion
         }
     }
+
+    private async Task DeletePlayerAsync(Player player)
+    {
+        // Example of how you might call your API to delete the player
+        var response = await _client.DeleteAsync($"http://127.0.0.1:5256/Player/{player.Id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Error deleting player: " + response.StatusCode);
+            // Handle errors or log them
+        }
+    }
+
 }

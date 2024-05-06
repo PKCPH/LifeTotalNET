@@ -17,33 +17,29 @@
                 VerticalOptions="Start"
                 HorizontalOptions="FillAndExpand" />
 
-        <!-- Search Players Section -->
-        <SearchBar x:Name="searchBar"
-                   Placeholder="Search players by name"
-                   TextChanged="SearchBar_TextChanged"
-                   VerticalOptions="Start"
-                   HorizontalOptions="FillAndExpand" />
 
-        <ListView x:Name="playersListView"
-          ItemsSource="{Binding Players}"
-          SelectionMode="None">
-            <ListView.ItemTemplate>
+        <CollectionView x:Name="playersCollectionView"
+                ItemsSource="{Binding Players}"
+                SelectionMode="Multiple"
+                SelectionChanged="OnSelectionChanged">
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Name}"
-                      Detail="{Binding Elo}"
-                      Command="{Binding Source={x:Reference Name=Page}, Path=BindingContext.PlayerSelectedCommand}"
-                      CommandParameter="{Binding .}" />
+                    <StackLayout Padding="10" Orientation="Horizontal">
+                        <Label Text="{Binding Name}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="StartAndExpand" />
+                        <Label Text="{Binding Elo}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="End" />
+                    </StackLayout>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-        <!-- Player Details Display -->
-        <StackLayout x:Name="playerDetails" IsVisible="False">
-            <Label Text="Player Details" FontAttributes="Bold" FontSize="Large"/>
-            <Label x:Name="playerName" Text="{Binding SelectedPlayer.Name}"/>
-            <Label x:Name="playerElo" Text="{Binding SelectedPlayer.Elo}"/>
-            <Label x:Name="playerMatches" Text="{Binding SelectedPlayer.Gamematches}"/>
-        </StackLayout>
+        <Button Text="Delete Player"
+        Clicked="OnDeletePlayerClicked"/>
+
+
 
     </VerticalStackLayout>
 </ContentPage>
