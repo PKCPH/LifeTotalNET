@@ -23,7 +23,7 @@ public partial class SecondPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        LoadPlayersAsync();  // Reload data every time the page appears
+        LoadPlayersAsync(); 
     }
 
 
@@ -51,13 +51,11 @@ public partial class SecondPage : ContentPage
             else
             {
                 Console.WriteLine($"Failed to fetch data: {response.StatusCode}");
-                // Handle other status codes and error scenarios
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Exception occurred: {ex.Message}");
-            // Handle exceptions or display an error message
         }
     }
 
@@ -73,15 +71,14 @@ public partial class SecondPage : ContentPage
 
         var json = JsonConvert.SerializeObject(player);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var contentString = await content.ReadAsStringAsync();  // This line allows you to see the actual JSON string
-        Console.WriteLine(contentString);  // Log the JSON string to the output for verification
+        var contentString = await content.ReadAsStringAsync();  
 
         try
         {
             var response = await _client.PostAsync("http://127.0.0.1:5256/Player", content);
             if (response.IsSuccessStatusCode)
             {
-                playerNameEntry.Text = string.Empty; // Clear the text field on success
+                playerNameEntry.Text = string.Empty; 
                 LoadPlayersAsync();
                 await DisplayAlert("Success", "Player created successfully", "OK");
             }
@@ -109,22 +106,20 @@ public partial class SecondPage : ContentPage
         {
             foreach (var player in _selectedPlayers)
             {
-                Players.Remove(player); // Assuming Players is an ObservableCollection<Player>
-                                        // You should also call your API or service here to delete the player from the backend
+                Players.Remove(player); 
+                                        
                 await DeletePlayerAsync(player);
             }
-            _selectedPlayers.Clear(); // Clear the selected players list after deletion
+            _selectedPlayers.Clear(); 
         }
     }
 
     private async Task DeletePlayerAsync(Player player)
     {
-        // Example of how you might call your API to delete the player
         var response = await _client.DeleteAsync($"http://127.0.0.1:5256/Player/{player.Id}");
         if (!response.IsSuccessStatusCode)
         {
             Console.WriteLine("Error deleting player: " + response.StatusCode);
-            // Handle errors or log them
         }
     }
 
