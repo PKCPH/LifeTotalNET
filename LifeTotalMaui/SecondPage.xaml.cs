@@ -9,8 +9,8 @@ namespace LifeTotalMaui;
 public partial class SecondPage : ContentPage
 {
     private HttpClient _client = new HttpClient();
-    public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
-    public ICommand PlayerSelectedCommand { get; private set; }
+    public ObservableCollection<Player> Players { get; set; } = new ObservableCollection<Player>();
+    public ICommand PlayerSelectedCommand { get; set; }
     private List<Player> _selectedPlayers = new List<Player>();
 
 

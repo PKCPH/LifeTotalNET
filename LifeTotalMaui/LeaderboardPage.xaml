@@ -15,8 +15,12 @@
                         <StackLayout Orientation="Horizontal" Padding="10">
                             <Label Text="{Binding Name}"
                                    VerticalOptions="Center"
-                                   HorizontalOptions="Center"
+                                   HorizontalOptions="Start"
                                    FontAttributes="Bold" />
+                            <Label Text="{Binding Id}"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="End"
+                                    IsVisible="False"/>
                             <Label Text="{Binding Elo}"
                                    VerticalOptions="Center"
                                    HorizontalOptions="End"
@@ -28,4 +32,3 @@
         </ListView>
     </VerticalStackLayout>
 </ContentPage>
-

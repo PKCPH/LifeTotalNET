@@ -6,7 +6,6 @@
 
     <VerticalStackLayout Padding="30" Spacing="20">
 
-        <!-- Create Player Section -->
         <Entry x:Name="playerNameEntry"
                Placeholder="Enter player's name"
                VerticalOptions="Start"
@@ -27,7 +26,7 @@
                     <StackLayout Padding="10" Orientation="Horizontal">
                         <Label Text="{Binding Name}"
                        VerticalOptions="Center"
-                       HorizontalOptions="StartAndExpand" />
+                       HorizontalOptions="Start" />
                         <Label Text="{Binding Elo}"
                        VerticalOptions="Center"
                        HorizontalOptions="End" />

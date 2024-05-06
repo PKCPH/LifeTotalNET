@@ -10,7 +10,6 @@ public class Player
     public string? Id { get; set; }
 
     public string Name { get; set; }
-    [JsonIgnore]
     public int? Elo { get; set; }
 
     [JsonIgnore]
@@ -25,6 +24,18 @@ public class PlayerCreate
     public string Name { get; set; }
     [JsonIgnore]
     public int? Elo { get; set; }
+
+    [JsonIgnore]
+    public ICollection<GamematchPlayer>? Gamematches { get; set; }
+}
+
+public class PlayerGet
+{
+    [JsonIgnore]
+    public string? Id { get; set; }
+
+    public string Name { get; set; }
+    public int Elo { get; set; }
 
     [JsonIgnore]
     public ICollection<GamematchPlayer>? Gamematches { get; set; }

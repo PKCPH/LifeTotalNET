@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LifeTotalAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240505222421_Init2")]
-    partial class Init2
+    [Migration("20240506061347_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,6 +61,10 @@ namespace LifeTotalAPI.Migrations
 
                     b.Property<Guid>("PlayerId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PlayerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -123,17 +127,21 @@ namespace LifeTotalAPI.Migrations
 
             modelBuilder.Entity("LifeTotalAPI.Models.GamematchPlayer", b =>
                 {
-                    b.HasOne("LifeTotalAPI.Models.Gamematch", null)
+                    b.HasOne("LifeTotalAPI.Models.Gamematch", "Gamematch")
                         .WithMany("Players")
                         .HasForeignKey("GameMatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LifeTotalAPI.Models.Player", null)
+                    b.HasOne("LifeTotalAPI.Models.Player", "Player")
                         .WithMany("Gamematches")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Gamematch");
+
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("LifeTotalAPI.Models.Gamematch", b =>

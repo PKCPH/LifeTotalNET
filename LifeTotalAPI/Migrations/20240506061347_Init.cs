@@ -17,7 +17,7 @@ namespace LifeTotalAPI.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Elo = table.Column<int>(type: "int", nullable: false)
+                    Elo = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -64,6 +64,7 @@ namespace LifeTotalAPI.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GameMatchId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PlayerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PlayerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LifeTotal = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
