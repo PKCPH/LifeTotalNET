@@ -9,9 +9,17 @@
                 <DataTemplate>
                     <StackLayout Padding="10" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <Label Text="{Binding PlayerNames}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+
+                        <Label Text="Life Totals:" VerticalOptions="Center" HorizontalOptions="Start" />
+                        <Entry Text="{Binding Players[0].LifeTotal, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Start" />
+                        <Entry Text="{Binding Players[1].LifeTotal, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Start" />
+
                         <Label Text="{Binding DateTime, StringFormat='{0:G}'}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
                         <Label Text="{Binding MatchState}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
                         <Label Text="{Binding Winner.Name, StringFormat='Winner: {0}'}" VerticalOptions="Center" HorizontalOptions="End" />
+
+                        <Button Text="Update" Clicked="UpdateLifeTotal" CommandParameter="{Binding .}" VerticalOptions="Center" HorizontalOptions="End" />
+
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

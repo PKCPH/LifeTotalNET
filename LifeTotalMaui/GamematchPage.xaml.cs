@@ -1,6 +1,7 @@
 using LifeTotalMaui.Models;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Text;
 
 namespace LifeTotalMaui;
 
@@ -67,6 +68,28 @@ public partial class GamematchPage : ContentPage
             // Force the CollectionView to refresh
             matchesCollectionView.ItemsSource = null;
             matchesCollectionView.ItemsSource = Gamematches;
+        }
+    }
+
+    private async void UpdateLifeTotal(object gamematch1, EventArgs e)
+    {
+        Gamematch gamematch = gamematch1 as Gamematch;
+        try
+        {
+            var json = JsonConvert.SerializeObject(gamematch);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _client.PutAsync($"http://127.0.0.1:5256/gamematch/{gamematch.Id}", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+            }
+            else
+            {
+            }
+        }
+        catch (Exception ex)
+        {
         }
     }
 }

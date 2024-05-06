@@ -29,7 +29,7 @@ public class PlayerService
 
     public async Task<Player> AddPlayer(Player player)
     {
-        player.Elo = 1200;
+        player.Elo = 1140;
         return await _playerRepository.AddPlayer(player);
     }
 
